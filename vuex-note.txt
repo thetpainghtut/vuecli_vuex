@@ -1,0 +1,30 @@
+Installation (State Management Pattern)
+------------
+- Flux (discovered by facebook)
+
+- Problems (Why might need vuex)
+  - cann't use props for sibling components
+  - parent to child (props)
+  - child to parent (events)
+  - complicated
+
+- npm install vuex --save
+
+- in a component,
+  - state (script -> data)
+  - view (template)
+  - actions (script -> methods)
+
+- Adv
+  - one single source of truth
+  - every components has direct access
+  - global state (reactive)
+  - 
+
+- Equal Vue instance
+  - data (state)
+  - mehtods (actions)
+  - computed (getters)
+
+  - the diff -> (mutations)
+    - commit and track state changes

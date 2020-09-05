@@ -1,0 +1,20 @@
+Vue CLI
+-------
+- using node package (npm install)
+  - package.json (node_modules)
+
+- entry point => src/main.js
+  - create new instance
+  - mount el (#app)
+  - all packages import in main.js
+
+- components
+  - template (HTML), script (JS), style (CSS)
+  - in template section (use only one main element)
+
+- vue router
+  - create router.js
+  - import vue router => router.js (not in main.js)
+  - export router
+  - import router (router.js) in main.js
+  - mode (hisrtory (seen url) / abstract (not seen url))
