@@ -24,7 +24,11 @@ const store = new Vuex.Store({
       localStorage.setItem('cart', JSON.stringify(state.cart));
     },
     getData(state){
-      state.cart = JSON.parse(localStorage.getItem('cart'));
+      if(localStorage.getItem('cart')){
+        state.cart = JSON.parse(localStorage.getItem('cart'));
+      }else{
+        state.cart = [];
+      }
     }
   },
   actions:{

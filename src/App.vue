@@ -13,6 +13,9 @@ export default {
     NavBar
   },
   name: 'App',
+  mounted(){
+    this.$router.push('/items')
+  },
   data(){
     return {
       

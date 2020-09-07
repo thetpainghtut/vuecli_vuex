@@ -6,7 +6,7 @@
       </div>
     </div>
 
-    <div class="col-md-12">
+    <div class="row">
       <div class="col-md-3" v-for="(item,index) in items" :key="index">
         <ItemCard :item="item"></ItemCard>
       </div>

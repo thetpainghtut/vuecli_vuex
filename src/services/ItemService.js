@@ -15,5 +15,8 @@ export default{
   },
   getItem(id){
     return apiClient.get('/items/'+id)
+  },
+  createOrder(data){
+    return apiClient.post('/orders',data)
   }
 }
