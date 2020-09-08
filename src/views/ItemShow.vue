@@ -21,6 +21,8 @@
                   <span class="mr-2"> <b-icon icon="tag-fill" variant="info"></b-icon> {{item.brand.brand_name}}</span>
                   <span> <b-icon icon="tag-fill" variant="dark"></b-icon> {{item.subcategory.subcategory_name}}</span>
                 </p>
+
+                <p>Price: <strong class="text-danger">{{item.item_price}} MMK</strong></p>
                 
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 

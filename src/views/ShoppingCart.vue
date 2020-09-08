@@ -25,19 +25,18 @@
               <tr v-for="(item,index) in cart" :key="index">
                 <td>{{++index}}</td>
                 <td>{{item.name}}</td>
-                <td>{{item.price}}</td>
+                <td>{{formattingNumber(item.price)}} MMK</td>
                 <td>
-                  <button class="btn btn-sm px-2 btn-outline-danger"> + </button>
+                  <button class="btn btn-sm px-3 btn-outline-danger mx-2" @click="plusCart(item.id)"> + </button>
                   {{item.qty}}
-                  <button class="btn btn-sm px-2 btn-outline-danger"> - </button>
-
+                  <button class="btn btn-sm px-3 btn-outline-danger mx-2" @click="minusCart(item.id)"> - </button>
                   <button
                     @click="removeFromCart(item.id)"
-                    class="btn btn-sm btn-danger mx-2">
-                    Remove
+                    class="btn btn-sm btn-danger mx-2 px-2">
+                    x
                   </button>
                 </td>
-                <td>{{item.price*item.qty}} MMK</td>
+                <td>{{formattingNumber(item.price*item.qty)}} MMK</td>
               </tr>
             </tbody>
           </table>
@@ -50,7 +49,7 @@
           <ul class="list-group">
             <li class="list-group-item">
               <span class="float-left"><strong>{{ cartItemsCount }}</strong> items</span>
-              <span class="float-right">{{ itemsSubtotal }} MMK</span>
+              <span class="float-right">{{ formattingNumber(itemsSubtotal) }} MMK</span>
             </li>
             <li class="list-group-item">
               <span class="float-left">Shipping:</span>
@@ -66,15 +65,15 @@
             </li>
             <li class="list-group-item">
               <span class="float-left">Subtotal</span>
-              <span class="float-right">{{subtotal}} MMK</span>
+              <span class="float-right">{{formattingNumber(subtotal)}} MMK</span>
             </li>
             <li class="list-group-item">
               <span class="float-left">Tax ({{ salesTax * 100 }}%)</span>
-              <span class="float-right">{{ salesTaxApplied }} MMK</span>
+              <span class="float-right">{{ formattingNumber(salesTaxApplied | currencydecimal) }} MMK</span>
             </li>
             <li class="list-group-item">
               <span class="float-left">Total</span>
-              <span class="float-right">{{ total }} MMK</span>
+              <span class="float-right">{{ formattingNumber(total | currencydecimal) }} MMK</span>
             </li>
           </ul>
 
@@ -91,13 +90,13 @@
 
 <script type="text/javascript">
   import ItemService from '@/services/ItemService.js'
-
+  
   export default{
     data(){
       return{
         totalAmount: 0,
         notes: '',
-        orderDone: false,
+        orderDone: 0,
         selectedShippingOption: '',
         shippingOptionsArray: [
           {
@@ -158,6 +157,12 @@
       removeFromCart(itemId) {
         this.$store.dispatch('removeFromCart', itemId)
       },
+      plusCart(itemId){
+        this.$store.dispatch('plusCart',itemId)
+      },
+      minusCart(itemId){
+        this.$store.dispatch('minusCart',itemId)
+      },
       order(){
         let data = {shop_data: JSON.stringify(this.$store.state.cart),
                   notes: this.notes,total: this.totalAmount};
@@ -165,12 +170,21 @@
         .then(response => {
           console.log(response)
           localStorage.clear();
-          this.orderDone = true;
+          this.orderDone = 1;
           this.$store.dispatch('getData')
         })
         .catch(error => {
           console.log('There was an error:',error.response)
         })
+      },
+      formattingNumber(number) {
+        return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+      }
+    },
+    filters: {
+      currencydecimal (value) {
+        // return value.toFixed(0)
+        return Math.ceil(value)
       }
     }
   }
