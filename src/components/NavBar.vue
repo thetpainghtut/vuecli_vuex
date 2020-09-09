@@ -50,13 +50,11 @@
   </nav>
 </template>
 <script type="text/javascript">
-  import axios from 'axios'
-
+  
   export default{
     methods:{
       logout(){
         this.$store.dispatch('logout')
-        delete axios.defaults.headers.common['Authorization']
         this.$router.push('/')
       }
     },

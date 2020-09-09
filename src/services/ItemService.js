@@ -1,11 +1,14 @@
 import axios from 'axios'
 
+let token = localStorage.getItem('token')
+
 const apiClient = axios.create({
   baseURL: 'http://osapi.thetpainghtut.com/api/v1',
   withCredentials: false,
   headers: {
     Accept: 'application/json',
-    'Content-type': 'application/json'
+    'Content-type': 'application/json',
+    Authorization: `Bearer ${token}`
   }
 })
 

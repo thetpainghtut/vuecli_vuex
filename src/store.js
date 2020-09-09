@@ -6,7 +6,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
   state: {
     cart: [],
-    token: localStorage.getItem('token') || null,
+    token: null,
     authStatus: '',
   },
   mutations: {
@@ -46,8 +46,8 @@ const store = new Vuex.Store({
     },
     auth_success(state,token){
       state.authStatus = 'success'
+      localStorage.setItem('token',token)
       state.token = token
-      localStorage.setItem('token',state.token)
     },
     auth_fail(state){
       state.authStatus = 'fail'

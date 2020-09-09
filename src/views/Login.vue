@@ -28,7 +28,7 @@
 
 <script type="text/javascript">
   import ItemService from '@/services/ItemService.js'
-  import axios from 'axios'
+  // import axios from 'axios'
 
   export default{
     data(){
@@ -49,7 +49,7 @@
           .then(res => {
             const token = res.data.access_token
             this.$store.dispatch('loginSuccess', token)
-            axios.defaults.headers.common['Authorization'] = token
+            // axios.defaults.headers.common['Authorization'] = token
             this.$router.push('/orders')
           })
           .catch(err =>{
