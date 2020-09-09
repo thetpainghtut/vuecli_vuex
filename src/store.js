@@ -5,7 +5,9 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    cart: []
+    cart: [],
+    token: localStorage.getItem('token') || null,
+    authStatus: '',
   },
   mutations: {
     addToCart (state, payload) {
@@ -41,6 +43,18 @@ const store = new Vuex.Store({
       }else{
         state.cart = [];
       }
+    },
+    auth_success(state,token){
+      state.authStatus = 'success'
+      state.token = token
+      localStorage.setItem('token',state.token)
+    },
+    auth_fail(state){
+      state.authStatus = 'fail'
+    },
+    logout(state){
+      localStorage.removeItem('token')
+      state.token=null
     }
   },
   actions:{
@@ -62,7 +76,24 @@ const store = new Vuex.Store({
     },
     getData({ commit }){
       commit('getData')
+    },
+    loginSuccess({commit},token){
+      commit('auth_success',token)
+    },
+    loginFail({commit}){
+      commit('auth_fail')
+    },
+    logout({commit}){
+      commit('logout')
     }
+  },
+  getters : {
+    isLoggedIn(state){
+      return state.token
+    },
+    authStatus(state){
+      return state.authStatus
+    } 
   }
 })
 
