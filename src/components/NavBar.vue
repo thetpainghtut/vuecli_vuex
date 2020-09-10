@@ -31,7 +31,7 @@
               <router-link :to="{name:'order-list'}" class="nav-link mr-2">Order List</router-link>
             </li>
             <li class="nav-item">
-              <a @click="logout" class="nav-link mr-2 text-danger" style="cursor: pointer;">Logout</a>
+              <a @click="logout()" class="nav-link mr-2 text-danger" style="cursor: pointer;">Logout</a>
             </li>
           </span>
           <span v-else style="display: inherit;">

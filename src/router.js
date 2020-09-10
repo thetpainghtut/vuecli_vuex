@@ -65,7 +65,7 @@ let router = new VueRouter({
       component: Login
     },
   ],
-  mode: 'abstract' // abstract
+  mode: 'history' // abstract
 })
 
 router.beforeEach((to, from, next) => {

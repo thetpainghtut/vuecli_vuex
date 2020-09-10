@@ -41,7 +41,7 @@
       }
     },
     created(){
-      ItemService.getOrders(this.$store.state.token)
+      ItemService.getOrders()
         .then(response => {
           this.orders = response.data.orders
         })
