@@ -18,3 +18,10 @@ Vue CLI
   - export router
   - import router (router.js) in main.js
   - mode (hisrtory (seen url) / abstract (not seen url))
+
+- Auth
+  - username (stehr.dane@example.net)
+  - password (password)
+  - client_id (2)
+  - client_secret (A1d2KgMpgmgxL8VDPue9XQEMpXky6xpLFY9sOm0q)
+  - grant_type (password)
