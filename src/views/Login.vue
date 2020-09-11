@@ -28,7 +28,6 @@
 
 <script type="text/javascript">
   import ItemService from '@/services/ItemService.js'
-  // import axios from 'axios'
 
   export default{
     data(){
@@ -41,22 +40,12 @@
     methods:{
       Login(){
         let user = {username: this.email, password: this.password}
-        user.client_id = 2
-        user.client_secret  = 'A1d2KgMpgmgxL8VDPue9XQEMpXky6xpLFY9sOm0q'
-        user.grant_type = 'password'
-
-        ItemService.login(user)
-          .then(res => {
-            const token = res.data.access_token
-            this.$store.dispatch('loginSuccess', token)
-            // axios.defaults.headers.common['Authorization'] = token
-            this.$router.push('/orders')
-          })
-          .catch(err =>{
-            console.log('There was an error:',err.response)
-            this.errMsg = 'Login Failed!, Incorrect Email and Password'
-            this.$store.dispatch('loginFail')
-          })
+        this.$store.dispatch('login',user)
+          .then(() => this.$router.push('/orders'))
+          .catch(err => {
+              console.log('There was an error:',err.response)
+              this.errMsg = 'Login Failed!, Incorrect Email and Password'
+            });
       }
     },
     computed:{

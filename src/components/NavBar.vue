@@ -1,9 +1,9 @@
 <template>
   <nav class="navbar navbar-expand navbar-light bg-light">
     <div class="container">
-      <a class="navbar-brand" href="#">
+      <router-link class="navbar-brand" :to="{name:'item-list'}">
         <img src="@/assets/logo.png" width="30" height="30" alt="Vue logo" loading="lazy">
-      </a>
+      </router-link>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
@@ -25,14 +25,20 @@
               </span>
             </router-link>
           </li>
-
+        </ul>
+        <ul class="navbar-nav ml-auto">
           <span v-if="isLoggedIn" style="display: inherit;">
             <li class="nav-item">
               <router-link :to="{name:'order-list'}" class="nav-link mr-2">Order List</router-link>
             </li>
-            <li class="nav-item">
-              <a @click="logout()" class="nav-link mr-2 text-danger" style="cursor: pointer;">Logout</a>
-            </li>
+            <b-nav-item-dropdown right>
+              <!-- Using 'button-content' slot -->
+              <template v-slot:button-content>
+                <em v-if="authUser">{{authUser.name}} </em>
+              </template>
+              <b-dropdown-item href="#">Profile</b-dropdown-item>
+              <b-dropdown-item href="#" @click="logout()">Sign Out</b-dropdown-item>
+            </b-nav-item-dropdown>
           </span>
           <span v-else style="display: inherit;">
             <li class="nav-item">
@@ -65,6 +71,9 @@
       },
       isLoggedIn() { 
         return this.$store.getters.isLoggedIn
+      },
+      authUser(){
+        return this.$store.state.user
       }
     }
   }

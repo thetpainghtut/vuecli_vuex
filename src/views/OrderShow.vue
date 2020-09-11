@@ -12,7 +12,7 @@
         <div class="row">
           <div class="col-md-6">
             <p class="text-left"><strong>Voucherno :</strong> {{ order.order_voucherno }}</p>
-            <p class="text-left"><strong>Customer :</strong> {{ order.order_user.user_name }}</p>
+            <p class="text-left" v-if="order.order_user"><strong>Customer :</strong> {{ order.order_user.user_name }}</p>
           </div>
           <div class="col-md-6">
             <p class="text-right"><strong>Order Date :</strong> {{ order.created_at }}</p>

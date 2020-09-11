@@ -69,11 +69,11 @@
             </li>
             <li class="list-group-item">
               <span class="float-left">Tax ({{ salesTax * 100 }}%)</span>
-              <span class="float-right">{{ formattingNumber(salesTaxApplied | currencydecimal) }} MMK</span>
+              <span class="float-right">{{ formattingNumber(salesTaxApplied) }} MMK</span>
             </li>
             <li class="list-group-item">
               <span class="float-left">Total</span>
-              <span class="float-right">{{ formattingNumber(total | currencydecimal) }} MMK</span>
+              <span class="float-right">{{ formattingNumber(total) }} MMK</span>
             </li>
           </ul>
 
@@ -141,16 +141,16 @@
       },
       salesTaxApplied() {
         if (this.selectedShippingOption) {
-          return (this.subtotal * this.salesTax).toFixed(2);
+          return Math.ceil(this.subtotal * this.salesTax);
         }
-        return '---';
+        return 0
       },
       total() {
         if (this.selectedShippingOption) {
-          return Number(this.subtotal)
-                 + Number(this.salesTaxApplied);
+          return Math.ceil(Number(this.subtotal)
+                 + Number(this.salesTaxApplied));
         }
-        return '---';
+        return 0
       },
     },
     methods: {
@@ -181,12 +181,6 @@
         return number.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
       }
     },
-    filters: {
-      currencydecimal (value) {
-        // return value.toFixed(0)
-        return Math.ceil(value)
-      }
-    }
   }
 </script>
 

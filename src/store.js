@@ -1,13 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import axios from 'axios'
 
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
     cart: [],
-    token: null,
+    token: localStorage.getItem('token') || '',
     authStatus: '',
+    user: {}
   },
   mutations: {
     addToCart (state, payload) {
@@ -44,6 +46,9 @@ const store = new Vuex.Store({
         state.cart = [];
       }
     },
+    auth_request(state){
+      state.authStatus = 'loadings...'
+    },
     auth_success(state,token){
       state.authStatus = 'success'
       localStorage.setItem('token',token)
@@ -54,8 +59,12 @@ const store = new Vuex.Store({
     },
     logout(state){
       localStorage.removeItem('token')
-      state.token=null
-    }
+      state.token = null
+      state.user = null
+    },
+    storeUserData(state,user){
+      state.user = user
+    },
   },
   actions:{
     addToCart({ commit }, payload) {
@@ -77,6 +86,46 @@ const store = new Vuex.Store({
     getData({ commit }){
       commit('getData')
     },
+    login({commit,dispatch},user){
+      return new Promise((resolve, reject) => {
+          commit('auth_request');
+          let data = {
+              client_id: 2,
+              client_secret: 'A1d2KgMpgmgxL8VDPue9XQEMpXky6xpLFY9sOm0q',
+              grant_type: 'password',
+              username: user.username,
+              password: user.password
+          };
+          axios.post('http://osapi.thetpainghtut.com/oauth/token', data)
+              .then(res => {
+                  const token = res.data.access_token;
+                  localStorage.setItem('token', token);
+
+                  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+
+                  commit('auth_success', token);
+                  dispatch('getUser');
+                  resolve(res);
+              })
+              .catch(err => {
+                  commit('auth_fail');
+                  localStorage.removeItem('token');
+                  reject(err);
+              });
+      });
+    },
+    getUser(state){
+      return new Promise((resolve, reject) => {
+        axios.get('http://osapi.thetpainghtut.com/api/user')
+        .then(res => {
+            state.commit('storeUserData', res.data);
+            resolve(res);
+        })
+        .catch(err => {
+            reject(err);
+        })
+      });
+    },
     loginSuccess({commit},token){
       commit('auth_success',token)
     },
@@ -85,15 +134,14 @@ const store = new Vuex.Store({
     },
     logout({commit}){
       commit('logout')
-    }
+    },
+    storeUserData({commit},user){
+      commit('storeUserData',user)
+    },
   },
   getters : {
-    isLoggedIn(state){
-      return state.token
-    },
-    authStatus(state){
-      return state.authStatus
-    } 
+    isLoggedIn: state => !!state.token,
+    authStatus: state => state.authStatus,
   }
 })
 

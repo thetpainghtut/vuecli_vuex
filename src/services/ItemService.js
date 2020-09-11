@@ -27,8 +27,5 @@ export default{
   },
   getOrder(id){
     return apiClient.get('/orders/'+id)
-  },
-  login(user){
-    return axios.post('http://osapi.thetpainghtut.com/oauth/token',user)
   }
 }

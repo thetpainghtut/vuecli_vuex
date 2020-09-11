@@ -14,7 +14,7 @@ export default {
   },
   name: 'App',
   mounted(){
-    this.$router.push('/')
+    // this.$router.push('/')
   },
   data(){
     return {

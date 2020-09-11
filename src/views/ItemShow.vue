@@ -18,8 +18,8 @@
                 <h5 class="card-title">{{item.item_name}}</h5>
                 <p class="card-text">{{ item.item_desc }} This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                 <p>
-                  <span class="mr-2"> <b-icon icon="tag-fill" variant="info"></b-icon> {{item.brand.brand_name}}</span>
-                  <span> <b-icon icon="tag-fill" variant="dark"></b-icon> {{item.subcategory.subcategory_name}}</span>
+                  <span class="mr-2" v-if="item.brand"> <b-icon icon="tag-fill" variant="info"></b-icon> {{item.brand.brand_name}}</span>
+                  <span v-if="item.subcategory"> <b-icon icon="tag-fill" variant="dark"></b-icon> {{item.subcategory.subcategory_name}}</span>
                 </p>
 
                 <p>Price: <strong class="text-danger">{{item.item_price}} MMK</strong></p>

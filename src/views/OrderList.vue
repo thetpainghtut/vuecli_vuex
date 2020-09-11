@@ -14,6 +14,7 @@
               <th>No</th>
               <th>Voucherno</th>
               <th>Customer</th>
+              <th>Notes</th>
               <th>Total</th>
               <th>Actions</th>
             </tr>
