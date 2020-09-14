@@ -26,6 +26,8 @@
                 
                 <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
 
+                <p class="card-text"><small class="text-muted">{{showDate}}</small></p>
+
                 <input type="number" name="qty" v-model="qty" class="form-control w-25 d-inline-block" min="1">
 
                 <button class="ml-3 btn btn-info" @click="addToCart()">Add To Cart</button>
@@ -63,6 +65,16 @@
       addToCart() {
         let item = {id:this.item.item_id,name:this.item.item_name,price:this.item.item_price,qty:this.qty};
         this.$store.dispatch('addToCart', item)
+      }
+    },
+    computed:{
+      showDate(){
+        let date = new Date(this.item.created_at)
+        // return ``
+        let fullhours = date.getHours()
+        let AmOrPm = fullhours >= 12 ? 'PM' : 'AM';
+        let hours = ( fullhours % 12) || 12;
+        return `${date.getDate()}-${date.getMonth()+1}-${date.getFullYear()} ( ${hours}:${date.getMinutes()}:${date.getSeconds()} - ${AmOrPm} )`
       }
     }
   }

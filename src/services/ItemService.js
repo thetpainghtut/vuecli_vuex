@@ -3,7 +3,8 @@ import axios from 'axios'
 let token = localStorage.getItem('token')
 
 const apiClient = axios.create({
-  baseURL: 'http://osapi.thetpainghtut.com/api/v1',
+  // baseURL: 'http://osapi.thetpainghtut.com/api/v1',
+  baseURL: 'http://localhost:8000/api/v1',
   withCredentials: false,
   headers: {
     Accept: 'application/json',
